@@ -3,8 +3,8 @@
 import datetime
 import psycopg2
 
-if (DBNAME == ""):
-    DBNAME="news" # TODO: remove this after testing
+
+DBNAME="news" # TODO: remove this after testing
 
 def get_data(table):
   """Return all from the 'database', most recent first."""

@@ -25,3 +25,14 @@ def add_row(table,content):
   db.close()
 
 
+def create_view_author_article_count():
+  db = psycopg2.connect("dbname={}".format(DBNAME))
+  c = db.cursor()
+  c.execute("select authors.name, count(articles.author) as num_of_articles \
+                from authors \
+                left outer join articles on authors.id = articles.author \
+                group by authors.name order by num_of_articles desc;")
+  rows = c.fetchall()
+  db.commit()
+  db.close()
+  return(rows)

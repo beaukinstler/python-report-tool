@@ -22,7 +22,7 @@ def print_rows(table):
 
 def print_report():
     """print first 10 rows from the table"""
-    rows = reportdb.create_view_author_article_count()
+    rows = reportdb.report_authors_article_count()
     i = 0
     while (i < 10 and i < len(rows)):
         print(str(rows[i][-2]) + " - " + str(rows[i][-1])) # testing TODO: remove this. It shows that I can access column 4 from a resulting table
@@ -32,13 +32,14 @@ def print_report():
 
 
 def main():
+    reportdb.create_view_author_article_count()
     if (DEBUG==1):
         debugger()
         test_function()
     '''Main program to run automatically when this module is called directly'''
     #print_rows("log")
-    print_rows("articles")
-    print_rows("authors")
+    # print_rows("articles")
+    # print_rows("authors")
     print_report()
     
 

@@ -26,13 +26,21 @@ def add_row(table,content):
 
 
 def create_view_author_article_count():
+  """Build the view of author ariticle counts"""
   db = psycopg2.connect("dbname={}".format(DBNAME))
   c = db.cursor()
-  c.execute("select authors.name, count(articles.author) as num_of_articles \
+  c.execute("create view v_author_article as select authors.name, count(articles.author) as num_of_articles \
                 from authors \
                 left outer join articles on authors.id = articles.author \
                 group by authors.name order by num_of_articles desc;")
-  rows = c.fetchall()
   db.commit()
+  db.close()
+
+def report_authors_article_count():
+  """get the Authors' article counts"""
+  db = psycopg2.connect("dbname={}".format(DBNAME))
+  c = db.cursor()
+  c.execute("select * from v_author_article;")
+  rows = c.fetchall()
   db.close()
   return(rows)

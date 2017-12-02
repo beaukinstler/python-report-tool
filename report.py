@@ -1,5 +1,6 @@
 import psycopg2
 import inspect
+import reportdb
 
 DEBUG=1
 
@@ -16,6 +17,11 @@ def main():
         debugger()
         test_function()
     '''Main program to run automatically when this module is called directly'''
+    rows = reportdb.get_data("log")
+    i = 0
+    while i < 10:
+        print(rows[i][3]) # testing TODO: remove this. It shows that I can access column 4 from a resulting table
+        i+=1
 
 
 if __name__ == '__main__':

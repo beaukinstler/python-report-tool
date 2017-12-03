@@ -27,8 +27,20 @@ def add_row(table,content):
 
 def create_view_author_article_count():
   """Build the view of author ariticle counts"""
+
+  """Make sure the view doesn't already exist"""
   db = psycopg2.connect("dbname={}".format(DBNAME))
   c = db.cursor()
+  c.execute("select * from information_schema.views    \
+             where table_name = 'v_author_article';")
+  
+  """If the view is found, stop the fuction"""
+  rows = c.fetchall()
+  if len(rows) > 0:
+    db.close()
+    return
+  
+  """Build the view"""
   c.execute("create view v_author_article as select authors.name, count(articles.author) as num_of_articles \
                 from authors \
                 left outer join articles on authors.id = articles.author \

@@ -1,7 +1,7 @@
-Movie Trailers
+Python Reporting Tool
 ================
 
-This is a sample project for Udacity's "Programming Foundations" cource, and the Full Stack Web Dev nanodegree.
+This is a sample project for Udacity's "Programming Foundations" course, and the Full Stack Web Dev nanodegree.
 
 In this project, I'm making a tool to report basic stats via text output.  The stats in this case, will be based on a postgresql database that has website logs.
 
@@ -39,7 +39,7 @@ Issues
 Contributing
 ------------
 
-This is a demo project and will not be actively maintained. Your tallents will be far more useful elseware.
+This is a demo project and will not be actively maintained. Your talents will be far more useful elsewhere.
 
 Credits
 -------

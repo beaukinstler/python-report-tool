@@ -1,7 +1,7 @@
 Python Reporting Tool
 ================
 
-This is a sample project for Udacity's "Programming Foundations" course, and the Full Stack Web Dev nanodegree.
+This is a sample project for Udacity's "Programming Foundations" course, and the Full Stack Web Dev nano-degree.
 
 In this project, I'm making a tool to report basic stats via text output.  The stats in this case, will be based on a postgresql database that has website logs.
 
@@ -29,7 +29,7 @@ Usage
     * NOTE: You must create a Movie() object for each movie that you want to include.
 1. Ensure all the movie instances have also been added to the `movies_list` array, if you want them show up on the web page.
 1. run the entertainment_center.py file.
-    * In most steups, with python installed, you should be able to run this command from the folder with this code
+    * In most setups, with python installed, you should be able to run this command from the folder with this code
         > `$ python entertainment_center.py`
     * This will run the code, create a `fresh_tomatoes.html` file in the working directory, and launch a web browser to read the file. -->
 
@@ -46,7 +46,7 @@ Credits
 
 Beau Kinstler - Developer
 
-Udacity and all it's contributers
+Udacity and all it's contributors
 
 License
 -------

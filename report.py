@@ -1,37 +1,44 @@
-import psycopg2
-import inspect
+import argparse
 import reportdb
 
-DEBUG=0
 
-def debugger():
-    print("called {}".format(inspect.stack()[1][3]))
-    print("called from {}".format(inspect.stack()[2][3]))
+PARSER = argparse.ArgumentParser()
+PARSER.add_argument("-c", "--createviews",
+                    help="if the views haven't been created, \
+                    this flag will attempt to build them",
+                    action="store_true")
+ARGS = PARSER.parse_args()
 
-def test_function():
-    if (DEBUG==1):
-        debugger()
 
 def print_10_rows(table):
-    """print first 10 rows from the table"""
+    """utility to print first 10 rows from a table"""
+
     rows = reportdb.get_data(table)
     i = 0
-    while (i < 10 and i < len(rows)):
-        print(rows[i][-2]) # testing TODO: remove this. It shows that I can access column 4 from a resulting table
-        i+=1
+    while i < 10 and i < len(rows):
+        print(rows[i][0])
+        i += 1
+
 
 def main():
-    reportdb.create_views()
-    if (DEBUG==1):
-        debugger()
-        test_function()
-    '''Main program to run automatically when this module is called directly'''
-    #print_rows("log")
-    # print_rows("articles")
-    # print_rows("authors")
-    reportdb.print_report_summary(100)
-    
+    """main program"""
 
+    if ARGS.createviews:
+        reportdb.create_views()
+
+        # Test a call to the db
+        try:
+            print_10_rows("v_author_article")
+            print("Views created and tested")
+        except Exception as e:
+            print("There was a problem connecting \
+                  to the 'v_author_article' view. \
+                  there may be a problem with \
+                  the database or views didn't build correctly.")
+            print(e.args[0])
+        return
+
+    reportdb.print_report_summary(100)
 
 if __name__ == '__main__':
     main()

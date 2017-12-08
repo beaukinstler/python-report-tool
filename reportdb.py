@@ -7,8 +7,8 @@ DBNAME = "news"
 
 def get_data(table):
     """Return all from the 'database', most recent first."""
-    db = psycopg2.connect("dbname={}".format(DBNAME))
-    c = db.cursor()
+    db = psycopg2.Cursor()
+    db = db.cursor()
     query = "select * from {}".format(table)
     c.execute(query)
     rows = c.fetchall()
@@ -43,30 +43,30 @@ def check_view_exists(view_name):
 def create_views():
     """Build the views used for reports"""
 
-    """Make sure the v_author_article doesn't already exist"""
+    # Make sure the v_author_article doesn't already exist
     if check_view_exists("v_author_article") is True:
         print("found v_author_article")
     else:
         db = psycopg2.connect("dbname={}".format(DBNAME))
         c = db.cursor()
 
-        """Build the view"""
+        # Build the view
         c.execute("create view v_author_article as select authors.name, \
                   count(articles.author) as num_of_articles \
                   from authors \
                   left outer join articles on authors.id = articles.author \
                   group by authors.name order by num_of_articles desc;")
-    db.commit()
-    db.close()
+        db.commit()
+        db.close()
 
-    """Make sure the v_most_viewed_article doesn't already exist"""
+    #Make sure the v_most_viewed_article doesn't already exist
     if check_view_exists("v_most_viewed_article") is True:
         print("found v_most_viewed_article")
     else:
         db = psycopg2.connect("dbname={}".format(DBNAME))
         c = db.cursor()
 
-        """Build the view"""
+        # Build the view
         c.execute("create view v_most_viewed_article as select a.title, \
                     count(l.time) as views from articles a \
                     left join log l on substr(l.path,10) = a.slug \
@@ -74,14 +74,14 @@ def create_views():
         db.commit()
         db.close()
 
-    """Make sure the v_report_errors doesn't already exist"""
+    # Make sure the v_report_errors doesn't already exist
     if check_view_exists("v_report_errors") is True:
         print("found v_report_errors")
     else:
         db = psycopg2.connect("dbname={}".format(DBNAME))
         c = db.cursor()
 
-        """Build the view"""
+        # Build the view
         c.execute("create view v_report_errors as select *, \
                   to_char(date,'Mon DD, YYYY') as friendly_date \
                   from (select date, round((err+0.0)/ok,4)*100 as percent \

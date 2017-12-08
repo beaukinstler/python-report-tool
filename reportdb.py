@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # "Database code" for the report.
 import psycopg2
 
@@ -7,22 +9,13 @@ DBNAME = "news"
 
 def get_data(table):
     """Return all from the 'database', most recent first."""
-    db = psycopg2.Cursor()
-    db = db.cursor()
+    db = psycopg2.connect("dbname={}".format(DBNAME))
+    c = db.cursor()
     query = "select * from {}".format(table)
     c.execute(query)
     rows = c.fetchall()
     db.close()
     return rows
-
-
-def add_row(tbl, content):
-    """Add a row."""
-    db = psycopg2.connect("dbname={}".format(DBNAME))
-    c = db.cursor()
-    c.execute("insert into (%s) values (%s)", (tbl,)(content,))
-    db.commit()
-    db.close()
 
 
 def check_view_exists(view_name):
@@ -59,7 +52,7 @@ def create_views():
         db.commit()
         db.close()
 
-    #Make sure the v_most_viewed_article doesn't already exist
+    # Make sure the v_most_viewed_article doesn't already exist
     if check_view_exists("v_most_viewed_article") is True:
         print("found v_most_viewed_article")
     else:

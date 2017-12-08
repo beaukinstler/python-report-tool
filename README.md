@@ -34,6 +34,38 @@ or clone with `$ git@github.com:beaukinstler/python-report-tool.git`
     - run `python3 report.py --createviews` or `python3 report.py -c`
 1. With the views create, and data in the tables, run `python3 report.py`.
 
+View Code
+---------
+
+_Note: These views are also built by running the `report.py` script with a `-c` flag. See above._
+
+        create view v_author_article as 
+        select authors.name,
+        count(articles.author) as num_of_articles
+        from authors
+        left outer join articles on authors.id = articles.author
+        group by authors.name order by num_of_articles desc;
+
+        create view v_most_viewed_article as 
+        select a.title, 
+        count(l.time) as views from articles a 
+        left join log l on substr(l.path,10) = a.slug 
+        group by a.title order by views desc;
+
+        create view v_report_errors as 
+        select *, to_char(date,'Mon DD, YYYY') as friendly_date 
+        from (
+            select date, round((err+0.0)/ok,4)*100 as percent 
+            from (
+                select date(log.time),count(ok.id) as ok,
+                    count(notok.id) as err  
+                from log 
+                left join log ok on ok.status = '200 OK' and ok.id = log.id 
+                left join log notok on notok.status <> '200 OK' and 
+                    notok.id = log.id group by date(log.time)
+                ) as tbl
+            ) as tbl2 where percent > 1;
+
 
 Issues
 ------

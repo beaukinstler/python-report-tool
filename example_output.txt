@@ -1,0 +1,25 @@
+
+Here's your report summary
+||||||||||||||||||||||||||||
+
+Number of articles by author
+============================
+Ursula La Multa - 4
+Rudolf von Treppenwitz - 2
+Anonymous Contributor - 1
+Markoff Chaney - 1
+
+Number of views by article
+==========================
+"Candidate is jerk, alleges rival" - 338647
+"Bears love berries, alleges bear" - 253801
+"Bad things gone, say good people" - 170098
+"Goats eat Google's lawn" - 84906
+"Trouble for troubled troublemakers" - 84810
+"Balloon goons doomed" - 84557
+"There are a lot of bears" - 84504
+"Media obsessed with bears" - 84383
+
+Dates with errors on over 1% of HTTP requests
+=============================================
+Jul 17, 2016 - 2.32%

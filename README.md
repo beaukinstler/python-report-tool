@@ -12,7 +12,12 @@ You'll need to have Python installed on your computer. Python 3 is the version t
 
 You may also need to install some modules via pip
 
-TODO: add modules if needed
+- psycopg2
+- argparser
+
+This tool also requires Postgresql. Tested on version 9.5.10. The database named `news` must be created, and the user running the code must have rights to write, read, and create views.
+
+Finally, this requires a specific data and logs formated based on Udacity's sample blog app, and there should be data in those tables.
 
 Documentation and Support
 -------------------------
@@ -21,17 +26,14 @@ This is a demo project, and there is planned support. However, you may find supp
 
 Usage
 -----
-<!-- 
-1. Download and unzip the files in this [zip file](https://github.com/beaukinstler/ud036_StarterCode/archive/master.zip), or clone with `$ git clone git@github.com:beaukinstler/ud036_StarterCode.git`
-1. `cd` into the 'ud036_StarterCode' folder.
-1. Edit the "entertainment_center.py" file.
-    * The movies can be changed in the `make_list_of_movies()` function.
-    * NOTE: You must create a Movie() object for each movie that you want to include.
-1. Ensure all the movie instances have also been added to the `movies_list` array, if you want them show up on the web page.
-1. run the entertainment_center.py file.
-    * In most setups, with python installed, you should be able to run this command from the folder with this code
-        > `$ python entertainment_center.py`
-    * This will run the code, create a `fresh_tomatoes.html` file in the working directory, and launch a web browser to read the file. -->
+
+1. Download and unzip the files in this [zip file](https://github.com/beaukinstler/python-report-tool/archive/master.zip), 
+or clone with `$ git@github.com:beaukinstler/python-report-tool.git`
+1. `cd` into the 'python-report-tool' folder.
+1. Build the views
+    - run `python3 report.py --createviews` or `python3 report.py -c`
+1. With the views create, and data in the tables, run `python3 report.py`.
+
 
 Issues
 ------

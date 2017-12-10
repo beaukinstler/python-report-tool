@@ -17,7 +17,20 @@ You may also need to install some modules via pip
 
 This tool also requires Postgresql. Tested on version 9.5.10. The database named `news` must be created, and the user running the code must have rights to write, read, and create views.
 
-Finally, this requires a specific data and logs formated based on Udacity's sample blog app, and there should be data in those tables.
+Finally, this requires a specific data and logs based on Udacity's sample blog app, and there should be data in those tables. As of now, this data can be [downloaded here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip).
+
+To import this data into an existing postgresql installation, you refer to Udacity's instructions.
+
+> To load the data, cd into the ... directory (where your "newsdata.sql" file is) and use the command
+> `psql -d news -f newsdata.sql`.
+> Here's what this command does:
+> 
+>     psql — the PostgreSQL command line program
+>     -d news — connect to the database named news which has been set up for you
+>     -f newsdata.sql — run the SQL statements in the file newsdata.sql
+> 
+> Running this command will connect to your installed database server and execute the SQL commands in 
+> the downloaded file, creating tables and populating them with data. 
 
 Documentation and Support
 -------------------------

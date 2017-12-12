@@ -80,7 +80,7 @@ def create_views():
         # Build the view
         c.execute("create view v_most_viewed_article as select a.title, \
                     count(l.time) as views from articles a \
-                    left join log l on substr(l.path,10) = a.slug \
+                    left join log l on l.path = '/article/' || a.slug \
                     group by a.title order by views desc;")
         db.commit()
         db.close()
@@ -120,7 +120,7 @@ def report_articles_most_viewied():
     """get the Authors' article counts"""
     db = psycopg2.connect("dbname={}".format(DBNAME))
     c = db.cursor()
-    c.execute("select * from v_most_viewed_article;")
+    c.execute("select * from v_most_viewed_article limit 3;")
     rows = c.fetchall()
     db.close()
     return(rows)

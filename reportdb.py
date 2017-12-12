@@ -23,7 +23,8 @@ def drop_a_view(table):
 def drop_all_views():
     drop_a_view("v_author_article")
     drop_a_view("v_most_viewed_article")
-    drop_a_view("v_report_errors")
+    drop_a_view("v_success_view_counts_bydate")
+    drop_a_view("v_view_counts_bydate")
 
 def get_data(table):
     """Return all from the 'database', most recent first."""
@@ -93,7 +94,8 @@ def create_views():
         c = db.cursor()
 
         # Build the view
-        c.execute("create view v_view_counts_bydate as select count(*), date(time) from log;")
+        c.execute("create view v_view_counts_bydate as select count(*), date(time) \
+                  from log group by date;")
         db.commit()
         db.close()
 

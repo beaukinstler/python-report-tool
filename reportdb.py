@@ -85,26 +85,32 @@ def create_views():
         db.commit()
         db.close()
 
-    # Make sure the v_report_errors doesn't already exist
-    if check_view_exists("v_report_errors") is True:
-        print("found v_report_errors")
+    # Make sure the v_view_counts_bydate doesn't already exist
+    if check_view_exists("v_view_counts_bydate") is True:
+        print("found v_view_counts_bydate")
     else:
         db = psycopg2.connect("dbname={}".format(DBNAME))
         c = db.cursor()
 
         # Build the view
-        c.execute("create view v_report_errors as select *, \
-                  to_char(date,'Mon DD, YYYY') as friendly_date \
-                  from (select date, round((err+0.0)/ok,4)*100 as percent \
-                  from (select date(log.time),count(ok.id) as ok \
-                  , count(notok.id) as err  from log \
-                  left join log ok on ok.status = '200 OK' and ok.id = log.id \
-                  left join log notok on notok.status <> '200 OK' and \
-                  notok.id = log.id group by date(log.time)) as tbl) \
-                  as tbl2 where percent > 1;")
+        c.execute("create view v_view_counts_bydate as select count(*), date(time) from log;")
         db.commit()
         db.close()
 
+    # Make sure the v_success_view_counts_bydate doesn't already exist
+    if check_view_exists("v_success_view_counts_bydate") is True:
+        print("found v_success_view_counts_bydate")
+    else:
+        db = psycopg2.connect("dbname={}".format(DBNAME))
+        c = db.cursor()
+
+        # Build the view
+        c.execute("create view v_success_view_counts_bydate as \
+                  select count(*), date(time) from log \
+                  where status = '200 OK' \
+                  group by date(time);")
+        db.commit()
+        db.close()
 
 def report_authors_article_count():
     """get the Authors' article counts"""
@@ -128,10 +134,16 @@ def report_articles_most_viewied():
 
 def report_http_errors():
     """report on dates with more than 1% of requests returning errors"""
+
     db = psycopg2.connect("dbname={}".format(DBNAME))
     c = db.cursor()
-    c.execute("select friendly_date, cast(round(percent,2) as text) \
-              ||'%' as error from v_report_errors;")
+    c.execute("select *  \
+              from (select to_char(a.date,'Mon DD, YYYY') as friendly_date, \
+              ROUND((1.0-((s.count+0.0)/(a.count))) * 100,2) \
+              as percent_of_error from \
+              v_success_view_counts_bydate s \
+              right join v_view_counts_bydate a on a.date = s.date) as tbl \
+              where tbl.percent_of_error > 1;")
     rows = c.fetchall()
     db.close()
     return(rows)

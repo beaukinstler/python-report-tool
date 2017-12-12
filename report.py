@@ -9,6 +9,9 @@ PARSER.add_argument("-c", "--createviews",
                     help="if the views haven't been created, \
                     this flag will attempt to build them",
                     action="store_true")
+PARSER.add_argument("-d", "--dropviews",
+                    help="drop views and exit",
+                    action="store_true")
 ARGS = PARSER.parse_args()
 
 
@@ -24,6 +27,12 @@ def print_10_rows(table):
 
 def main():
     """main program"""
+
+    if ARGS.dropviews:
+        # Drop views and exit
+        print("Attempting to drop views and exit the program")
+        reportdb.drop_all_views()
+        return 0
 
     if ARGS.createviews:
         print("Attempting to create and/or test the views. \
@@ -46,11 +55,10 @@ def main():
         try:
             if reportdb.check_view_exists("v_author_article") is False:
                 print("Something went wrong. Perhaps try to build the views by running with the --createviews flag")
-                return 1   
+                return 1
         except:
             print("Something went wrong. Make sure the reportdb.py exists in the same directory as report.py")
-                
-            
+
     reportdb.print_report_summary(100)
 
 if __name__ == '__main__':

@@ -7,6 +7,24 @@ import psycopg2
 DBNAME = "news"
 
 
+def drop_a_view(table):
+    """Drop a view"""
+    db = psycopg2.connect("dbname={}".format(DBNAME))
+    db.set_isolation_level(0)
+    c = db.cursor()
+
+    query = "drop view public.{};".format(table)
+    try:
+        c.execute(query)
+    except:
+        print("{} not found, nothing deleted".format(table))
+    db.close()
+
+def drop_all_views():
+    drop_a_view("v_author_article")
+    drop_a_view("v_most_viewed_article")
+    drop_a_view("v_report_errors")
+
 def get_data(table):
     """Return all from the 'database', most recent first."""
     db = psycopg2.connect("dbname={}".format(DBNAME))
@@ -44,11 +62,11 @@ def create_views():
         c = db.cursor()
 
         # Build the view
-        c.execute("create view v_author_article as select authors.name, \
-                  count(articles.author) as num_of_articles \
-                  from authors \
-                  left outer join articles on authors.id = articles.author \
-                  group by authors.name order by num_of_articles desc;")
+        c.execute("create view v_author_article as select ath.name, \
+                  count(l.path) from log l \
+                  join articles a on '/article/' || a.slug = l.path \
+                  join authors ath on ath.id = a.author group by \
+                  ath.name order by count desc;")
         db.commit()
         db.close()
 

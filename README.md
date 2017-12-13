@@ -50,8 +50,10 @@ or clone with `$ git@github.com:beaukinstler/python-report-tool.git`
 ### Delete the views
 Run `python3 report.py --dropviews` or `python3 report.py -d`
 
-View Code
+Creating the views
 ---------
+
+Below is the SQL (postgresql) code used to create the views used in this program.
 
 _Note: These views are also built by running the `report.py` script with a `-c` flag. See above._
 

@@ -157,7 +157,7 @@ def print_report_summary(rows_to_print):
     # Header
     print("")
     print("Here's your report summary")
-    print("||||||||||||||||||||||||||||")
+    print("<><><><><><><><><><><><><>")
     print("")
 
     # Report 1
@@ -188,5 +188,5 @@ def print_report_summary(rows_to_print):
     i = 0
 
     while i < len(rows):
-        print(str(rows[i][-2]) + " - " + str(rows[i][-1]))
+        print(str(rows[i][-2]) + " - " + str(rows[i][-1]) + "%")
         i += 1

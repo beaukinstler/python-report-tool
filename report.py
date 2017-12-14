@@ -54,10 +54,12 @@ def main():
     else:
         try:
             if reportdb.check_view_exists("v_author_article") is False:
-                print("Something went wrong. Perhaps try to build the views by running with the --createviews flag")
+                print("Something went wrong. Perhaps try to build the views by \
+                      running with the --createviews flag")
                 return 1
         except:
-            print("Something went wrong. Make sure the reportdb.py exists in the same directory as report.py")
+            print("Something went wrong. Make sure the reportdb.py exists in the \
+                  same directory as report.py")
 
     reportdb.print_report_summary(100)
 

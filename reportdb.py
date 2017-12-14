@@ -164,8 +164,8 @@ def print_report_summary(rows_to_print):
     print("")
 
     # Report 1
-    print("Number of articles by author")
-    print("============================")
+    print("Number of article views by author")
+    print("=================================")
     rows = report_authors_article_count()
     i = 0
     while i < rows_to_print and i < len(rows):
